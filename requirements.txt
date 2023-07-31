@@ -1,0 +1,4 @@
+python-dotenv
+llama-index
+openai
+argparse
