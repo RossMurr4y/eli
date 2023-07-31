@@ -1,5 +1,9 @@
 # ChatBot for Local Markdown
 
+botbot - a local chatbot for your personal documents.
+
+> botbot: get to the bottom of things!
+
 ## Setup
 
 1. `brew install python`
