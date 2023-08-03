@@ -2,7 +2,6 @@ from llama_index import VectorStoreIndex, SimpleDirectoryReader, download_loader
 from dotenv import load_dotenv
 import openai
 import os
-import sys
 import argparse
 
 def run_botbot():
