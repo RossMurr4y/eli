@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "botbot"
+version = "0.0.1"
+dependencies = [
+    "python-dotenv",
+    "llama-index",
+    "openai",
+    "argparse"
+]
+
+[project.scripts]
+umm = "botbot:run_botbot"
+
+[tool.setuptools.packages.find]
+where = ["src"]

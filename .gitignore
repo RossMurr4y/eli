@@ -1,5 +1,10 @@
 .env
 my_env**
-
+dist**
+src/botbot/__pycache__**
+src/botbot.egg-info**
 # local index
 storage**
+
+#vs code
+**.DS_Store
