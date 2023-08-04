@@ -1,4 +1,5 @@
-from __init__ import run_botbot
+from __init__ import TerminalInterface
 
 if __name__ == '__main__':
-    run_botbot()
+    app = TerminalInterface()
+    app.run()
