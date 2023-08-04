@@ -4,13 +4,7 @@ import openai
 import os
 import argparse
 
-def run_botbot():
-    # script args
-    parser = argparse.ArgumentParser(
-        prog='Document Chat Bot',
-        description='A chatbot for your documents')
-    parser.add_argument('question')
-    args = parser.parse_args()
+def run_botbot(question):
 
     # Run
     load_dotenv()
@@ -35,5 +29,5 @@ def run_botbot():
 
     query_engine = index.as_query_engine()
 
-    response = query_engine.query(args.question)
-    print(response)
+    response = query_engine.query(question)
+    return response

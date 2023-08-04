@@ -9,7 +9,8 @@ dependencies = [
     "python-dotenv",
     "llama-index",
     "openai",
-    "argparse"
+    "argparse",
+    "textual"
 ]
 
 [project.scripts]
