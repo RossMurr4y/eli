@@ -6,10 +6,10 @@ import os
 import sys
 
 @click.command()
-@click.option('--question', help='Your question for botbot.')
+@click.option('--question', help='Your question for quandary.')
 
 def answer_question(question):
-    """botbot: a local chatbot for your personal documents."""
+    """quandary: a local chatbot for your personal documents."""
     load_dotenv()
 
     parser = argparse.ArgumentParser(

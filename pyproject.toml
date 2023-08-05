@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "botbot"
+name = "quandary"
 version = "0.0.1"
 dependencies = [
     "python-dotenv",
@@ -14,7 +14,7 @@ dependencies = [
 ]
 
 [project.scripts]
-umm = "botbot:start_tui"
+quandary = "quandary:start_tui"
 
 [tool.setuptools.packages.find]
 where = ["src"]

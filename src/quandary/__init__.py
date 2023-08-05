@@ -23,8 +23,8 @@ class InputPane(Static):
         self.query_one(Input).value = ""
 
     def submit_question(self, question):
-        """submits a question to botbot"""
-        answer = run_botbot(question)
+        """submits a question to quandary"""
+        answer = run_quandary(question)
         return answer
 
 class ResponsePane(Static):
@@ -63,7 +63,7 @@ class QandAPane(Static):
         response_pane.update_markdown(answer)
 
 class TerminalInterface(App):
-    """A Terminal User Interface (TUI) for botbot."""
+    """A Terminal User Interface (TUI) for quandary."""
     CSS_PATH = "terminalinterface.css"
     BINDINGS = [("d", "toggle_dark", "Toggle dark mode.")]
 
@@ -77,23 +77,23 @@ class TerminalInterface(App):
         """Toggle dark mode"""
         self.dark = not self.dark
 
-def run_botbot(question):
+def run_quandary(question):
 
     # Run
     load_dotenv()
 
     # Constants
     OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
-    BOTBOT_DOCS_PATH = os.environ['BOTBOT_DOCS_PATH']
-    BOTBOT_INDEX_PATH = os.environ['BOTBOT_INDEX_PATH']
+    QNDY_DOCS_PATH = os.environ['QNDY_DOCS_PATH']
+    QNDY_INDEX_PATH = os.environ['QNDY_INDEX_PATH']
     openai.api_key = OPENAI_API_KEY
 
     reader = download_loader('ObsidianReader')
-    documents = reader(BOTBOT_DOCS_PATH).load_data()
+    documents = reader(QNDY_DOCS_PATH).load_data()
 
-    if os.path.exists(BOTBOT_INDEX_PATH):
+    if os.path.exists(QNDY_INDEX_PATH):
         # index already exists, so load it in
-        storage_context = StorageContext.from_defaults(persist_dir=BOTBOT_INDEX_PATH)
+        storage_context = StorageContext.from_defaults(persist_dir=QNDY_INDEX_PATH)
         index = load_index_from_storage(storage_context)
     else:
         # create index and persist it
