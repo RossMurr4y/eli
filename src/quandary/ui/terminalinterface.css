@@ -1,0 +1,8 @@
+InputPane {
+    layout: horizontal;
+    background: $boost;
+}
+
+#submit {
+    dock: right;
+}

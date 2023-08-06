@@ -3,17 +3,18 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "botbot"
+name = "quandary"
 version = "0.0.1"
 dependencies = [
     "python-dotenv",
     "llama-index",
     "openai",
-    "argparse"
+    "argparse",
+    "textual"
 ]
 
 [project.scripts]
-umm = "botbot:run_botbot"
+quandary = "quandary:start_tui"
 
 [tool.setuptools.packages.find]
 where = ["src"]

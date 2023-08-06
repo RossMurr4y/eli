@@ -1,8 +1,8 @@
 .env
 my_env**
 dist**
-src/botbot/__pycache__**
-src/botbot.egg-info**
+**__pycache__**
+src/quandary.egg-info**
 # local index
 storage**
 
