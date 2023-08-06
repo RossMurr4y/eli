@@ -15,7 +15,7 @@ python3 -m build
 pip3 install --editable . 
 ```
 
-Check its all setup with `umm --help`
+Check its all setup with `quandary`
 
 ## First Time Usage
 
