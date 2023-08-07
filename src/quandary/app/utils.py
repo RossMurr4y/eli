@@ -40,6 +40,7 @@ def run_quandary(question):
         debug_output = f"""
 ```
 Debug: Enabled
+Documents: {len(documents)}
 Nodes: {len(nodes)}
 ```
         """
