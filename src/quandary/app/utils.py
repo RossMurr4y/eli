@@ -1,5 +1,6 @@
 
 from llama_index import VectorStoreIndex, download_loader, StorageContext, load_index_from_storage
+from llama_index.node_parser import SimpleNodeParser
 from dotenv import load_dotenv
 import openai
 import os
@@ -17,6 +18,10 @@ def run_quandary(question):
 
     reader = download_loader('ObsidianReader')
     documents = reader(QNDY_DOCS_PATH).load_data()
+   
+    # parse nodes from documents
+    parser = SimpleNodeParser()
+    nodes = parser.get_nodes_from_documents(documents)
 
     if os.path.exists(QNDY_INDEX_PATH):
         # index already exists, so load it in
@@ -24,7 +29,7 @@ def run_quandary(question):
         index = load_index_from_storage(storage_context)
     else:
         # create index and persist it
-        index = VectorStoreIndex.from_documents(documents)
+        index = VectorStoreIndex(nodes)
         index.storage_context.persist()
 
     query_engine = index.as_query_engine()
