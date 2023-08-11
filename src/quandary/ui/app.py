@@ -1,6 +1,6 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer
-from quandary.ui.components import QandAPane
+from quandary.ui.components import QandAPane, MainScreen
 
 class TerminalInterface(App):
     """A Terminal User Interface (TUI) for quandary."""
@@ -16,3 +16,12 @@ class TerminalInterface(App):
     def action_toggle_dark(self) -> None:
         """Toggle dark mode"""
         self.dark = not self.dark
+
+
+class Quandary(App):
+    """The Quandary application's terminal user interface (TUI)"""
+    CSS_PATH = "terminalinterface.css"
+    #BINDINGS = [()]
+
+    def on_mount(self) -> None:
+        self.push_screen(MainScreen())

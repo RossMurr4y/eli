@@ -1,7 +1,7 @@
-from quandary.ui.app import TerminalInterface
+from quandary.ui.app import TerminalInterface, Quandary
 
 def start_tui():
-    app = TerminalInterface()
+    app = Quandary()
     app.run()
 
 if __name__ == '__main__':
