@@ -5,6 +5,29 @@ from llama_index.node_parser import SimpleNodeParser
 from dotenv import load_dotenv
 import openai
 import os
+from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
+from langchain.schema import HumanMessage
+
+
+def run_lang_quandary(question):
+
+    load_dotenv()
+    # Constants    
+    OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
+    QNDY_DOCS_PATH = os.environ['QNDY_DOCS_PATH']
+    QNDY_INDEX_PATH = os.environ['QNDY_INDEX_PATH']
+    QNDY_DEBUG = os.environ.get('QNDY_DEBUG', "False") in ["True", "1", "true"]
+    openai.api_key = OPENAI_API_KEY
+
+    llm = OpenAI()
+    chat_model = ChatOpenAI()
+
+    messages = [HumanMessage(content=question)]
+    prediction = chat_model.predict_messages(messages)
+    return Response(prediction.content)
+
+
 
 def run_quandary(question):
 
