@@ -10,7 +10,8 @@ dependencies = [
     "llama-index",
     "openai",
     "argparse",
-    "textual"
+    "textual",
+    "langchain"
 ]
 
 [project.scripts]
