@@ -35,6 +35,14 @@ class SwitchSetting(Widget):
     description = "default"
     enabled = reactive(True)
 
+    class SwitchChanged(Message):
+        """A message that is sent when a SwitchSetting is toggled"""
+
+        def __init__(self, description: str, enabled: bool) -> None:
+            super().__init__()
+            self.description = description
+            self.enabled = enabled
+
     def __init__(self, description: str, enabled: bool) -> None:
         self.enabled = enabled
         self.description = description
@@ -47,9 +55,8 @@ class SwitchSetting(Widget):
             classes="container"
         )
 
-    class SwitchChanged(Message):
-        """A message that is sent when the switch is toggled"""
-
-        def __init__(self, enabled: bool) -> None:
-            super().__init__()
-            self.enabled = enabled
+    def on_switch_changed(self, event: Switch.Changed):
+        event.stop()
+        self.enabled = event.value
+        # bubble a message to the parent
+        self.post_message(self.SwitchChanged(self.enabled, event.value))
