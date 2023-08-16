@@ -1,12 +1,11 @@
 from textual.app import ComposeResult
 from textual.message import Message
 from textual.reactive import reactive
-from textual.widget import Widget
 from textual.widgets import Static, Switch
 from textual.containers import Horizontal
 
 
-class SwitchSetting(Widget):
+class SwitchSetting(Static):
     """A binary configuration setting, exposed as a switch with a descriptive label"""
 
     DEFAULT_CSS = """
@@ -32,31 +31,33 @@ class SwitchSetting(Widget):
         width: auto;
     }
     """
-    description = "default"
+    label = "label_missing"
     enabled = reactive(True)
 
-    class SwitchChanged(Message):
+    class Changed(Message):
         """A message that is sent when a SwitchSetting is toggled"""
 
-        def __init__(self, description: str, enabled: bool) -> None:
+        def __init__(self, label: str, enabled: bool) -> None:
             super().__init__()
-            self.description = description
+            self.label = label
             self.enabled = enabled
 
-    def __init__(self, description: str, enabled: bool) -> None:
+    def __init__(self, label: str, enabled: bool) -> None:
         self.enabled = enabled
-        self.description = description
+        self.label = label
         super().__init__()
 
     def compose(self) -> ComposeResult:
         yield Horizontal(
-            Static(self.description, classes="label"),
+            Static(self.label, classes="label"),
             Switch(value=self.enabled),
             classes="container"
         )
 
     def on_switch_changed(self, event: Switch.Changed):
+        # disable the bubbling of the initial Switch.Changed event
         event.stop()
+        # update the widget state based on the event value
         self.enabled = event.value
         # bubble a message to the parent
-        self.post_message(self.SwitchChanged(self.enabled, event.value))
+        self.post_message(self.Changed(label=self.label, enabled=self.enabled))

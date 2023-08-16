@@ -3,9 +3,11 @@ from textual.containers import ScrollableContainer, VerticalScroll, Container
 from textual.widgets import Input, Static, Markdown, TabbedContent, Placeholder, Header, Footer, Pretty
 from textual.reactive import reactive
 from textual.screen import Screen
+from datetime import datetime
 
 from quandary.app.utils import run_quandary, run_lang_quandary
 from quandary.ui.widgets.SettingsTab import SettingsTab
+from quandary.ui.widgets.SwitchSetting import SwitchSetting
 
 class ResponsePane(Static):
     """A widget to view results."""
@@ -32,12 +34,9 @@ class QandAPane(Static):
 
 class DebugPane(Static):
     """a widget to view debug outputs."""
-    debug_data = [{ 
-        "key": "value",
-        "int": 123
-    }]
+    debug_data = [{ "DebugInitialised": f"{datetime.now()}" }]
     def compose(self) -> ComposeResult:
-        yield Pretty(self.debug_data)
+        yield Pretty(self.debug_data, id="debug_pane_output")
 
     def clear_debug_pane(self) -> None:
         """clears the debug pane."""
@@ -55,6 +54,15 @@ class TabbedNavigation(TabbedContent):
             yield ResponsePane()
             yield DebugPane()
             yield SettingsTab()
+
+    def on_switch_setting_changed(self, event: SwitchSetting.Changed) -> None:
+        """when a SwitchSetting is toggled, log that to the debug pane."""
+        debug_pane = self.query_one(DebugPane)
+        output = [{
+            "label": event.label,
+            "enabled": event.enabled
+        }]
+        debug_pane.append_debug_pane(output)
 
 class InputPane(Static):
     """A widget to accept and send input"""
