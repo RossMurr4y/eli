@@ -8,6 +8,7 @@ from datetime import datetime
 from quandary.app.utils import run_quandary, run_lang_quandary
 from quandary.ui.widgets.SettingsTab import SettingsTab
 from quandary.ui.widgets.SwitchSetting import SwitchSetting
+from quandary.ui.widgets.DebugTab import DebugTab, DebugPanel
 
 class ResponsePane(Static):
     """A widget to view results."""
@@ -32,37 +33,22 @@ class QandAPane(Static):
     def compose(self) -> ComposeResult:
         yield ScrollableContainer(ResponsePane(), InputPane())
 
-class DebugPane(Static):
-    """a widget to view debug outputs."""
-    debug_data = [{ "DebugInitialised": f"{datetime.now()}" }]
-    def compose(self) -> ComposeResult:
-        yield Pretty(self.debug_data, id="debug_pane_output")
-
-    def clear_debug_pane(self) -> None:
-        """clears the debug pane."""
-        self.query_one(Pretty).update("")
-
-    def append_debug_pane(self, content) -> None:
-        """appends content to the debug pane."""
-        self.debug_data.append(content)
-        self.query_one(Pretty).update(self.debug_data)
-
 class TabbedNavigation(TabbedContent):
     """The navigation pane"""
     def compose(self) -> ComposeResult:
         with TabbedContent("Response", "Debug", "Settings"):
             yield ResponsePane()
-            yield DebugPane()
+            yield DebugTab()
             yield SettingsTab()
 
     def on_switch_setting_changed(self, event: SwitchSetting.Changed) -> None:
         """when a SwitchSetting is toggled, log that to the debug pane."""
-        debug_pane = self.query_one(DebugPane)
+        debug_panel = self.query_one(DebugPanel)
         output = [{
             "id": event.id,
             "enabled": event.enabled
         }]
-        debug_pane.append_debug_pane(output)
+        debug_panel.append(output)
 
 class InputPane(Static):
     """A widget to accept and send input"""
@@ -135,16 +121,16 @@ class ScreenBody(Static):
     def on_input_submitted(self, event: Input.Submitted) -> None:
         input_pane = self.query_one(InputPane)
         response_pane = self.query_one(ResponsePane)
-        debug_pane = self.query_one(DebugPane)
+        debug_panel = self.query_one(DebugPanel)
         response_pane.clear_markdown()
         # update the debug pane with new prompt
-        debug_pane.append_debug_pane(event.input)
+        debug_panel.append(event.input)
         # submit prompt
         answer = self.submit_question(event.input.value)
         # clear input
         self.clear_input()
         # update the debug pane with answer
-        debug_pane.append_debug_pane(answer)
+        debug_panel.append(answer)
         # display answer
         response_pane.update_markdown(answer.response)
 
