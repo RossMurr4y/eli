@@ -9,9 +9,58 @@ from quandary.app.utils import run_quandary, run_lang_quandary
 from quandary.ui.widgets.SettingsTab import SettingsTab
 from quandary.ui.widgets.SwitchSetting import SwitchSetting
 from quandary.ui.widgets.DebugTab import DebugTab, DebugPanel
-from quandary.ui.widgets.ResponsePanel import ResponsePanel
-from quandary.ui.widgets.NavigationTabs import NavigationTabs
-from quandary.ui.widgets.InputPanel import InputPanel
+
+class ResponsePane(Static):
+    """A widget to view results."""
+        
+    def compose(self) -> ComposeResult:
+        """child widgets of a ResponsePane"""
+        MARKDOWN = """
+# Default Markdown Doc
+"""
+        yield Markdown(MARKDOWN)
+
+    def clear_markdown(self) -> None:
+        """clears the markdown window"""
+        self.query_one(Markdown).update("")
+
+    def update_markdown(self, content) -> None:
+        """updates the markdown window content"""
+        self.query_one(Markdown).update(content)
+
+class QandAPane(Static):
+    """A panel for submitting questions and reading answers"""
+    def compose(self) -> ComposeResult:
+        yield ScrollableContainer(ResponsePane(), InputPane())
+
+class TabbedNavigation(TabbedContent):
+    """The navigation pane"""
+    def compose(self) -> ComposeResult:
+        with TabbedContent("Response", "Debug", "Settings"):
+            yield ResponsePane()
+            yield DebugTab()
+            yield SettingsTab()
+
+    def on_switch_setting_changed(self, event: SwitchSetting.Changed) -> None:
+        """when a SwitchSetting is toggled, log that to the debug pane."""
+        debug_panel = self.query_one(DebugPanel)
+        output = [{
+            "id": event.id,
+            "enabled": event.enabled
+        }]
+        debug_panel.append(output)
+
+class InputPane(Static):
+    """A widget to accept and send input"""
+    DEFAULT_CSS = """
+    InputPane {
+        height: 1fr;
+        width: 1fr;
+    }
+    """
+    def compose(self) -> ComposeResult:
+        """child widgets of an InputPane"""
+        yield Input(id="text_input_field", placeholder="What do you want to know?")
 
 class BorderTop(Static):
     """A border for the top of the application."""
@@ -70,10 +119,10 @@ class ScreenBody(Static):
         self.input_text = event.input.value
 
     def on_input_submitted(self, event: Input.Submitted) -> None:
-        input_pane = self.query_one(InputPanel)
-        response_panel = self.query_one(ResponsePanel)
+        input_pane = self.query_one(InputPane)
+        response_pane = self.query_one(ResponsePane)
         debug_panel = self.query_one(DebugPanel)
-        response_panel.clear()
+        response_pane.clear_markdown()
         # update the debug pane with new prompt
         debug_panel.append(event.input)
         # submit prompt
