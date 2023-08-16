@@ -10,23 +10,7 @@ from quandary.ui.widgets.SettingsTab import SettingsTab
 from quandary.ui.widgets.SwitchSetting import SwitchSetting
 from quandary.ui.widgets.DebugTab import DebugTab, DebugPanel
 from quandary.ui.widgets.ResponsePanel import ResponsePanel
-
-class TabbedNavigation(TabbedContent):
-    """The navigation pane"""
-    def compose(self) -> ComposeResult:
-        with TabbedContent("Response", "Debug", "Settings"):
-            yield ResponsePanel()
-            yield DebugTab()
-            yield SettingsTab()
-
-    def on_switch_setting_changed(self, event: SwitchSetting.Changed) -> None:
-        """when a SwitchSetting is toggled, log that to the debug pane."""
-        debug_panel = self.query_one(DebugPanel)
-        output = [{
-            "id": event.id,
-            "enabled": event.enabled
-        }]
-        debug_panel.append(output)
+from quandary.ui.widgets.NavigationTabs import NavigationTabs
 
 class InputPane(Static):
     """A widget to accept and send input"""
@@ -124,7 +108,7 @@ class ScreenBody(Static):
     def compose(self) -> ComposeResult:
         yield Container(
             VerticalScroll(
-                TabbedNavigation(id="screen_body_tab_nav"),
+                NavigationTabs(id="screen_body_tab_nav"),
                 id="screen_body_top_v_scroll"),
             VerticalScroll(
                 InputPane(id="screen_body_input_pane"),
