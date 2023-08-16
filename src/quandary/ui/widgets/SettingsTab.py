@@ -16,6 +16,6 @@ class SettingsTab(Static):
 
     def compose(self) -> ComposeResult:
         yield Horizontal(
-            SwitchSetting(enabled=True, label="Document Mode:      "),
+            SwitchSetting(id="setting_doc_mode", enabled=True, label="Document Mode:      "),
             classes="container"
         )

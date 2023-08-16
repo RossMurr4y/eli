@@ -4,7 +4,6 @@ from textual.reactive import reactive
 from textual.widgets import Static, Switch
 from textual.containers import Horizontal
 
-
 class SwitchSetting(Static):
     """A binary configuration setting, exposed as a switch with a descriptive label"""
 
@@ -31,18 +30,22 @@ class SwitchSetting(Static):
         width: auto;
     }
     """
-    label = "label_missing"
+
+    id = ""
     enabled = reactive(True)
+    label = "label_missing"
 
     class Changed(Message):
         """A message that is sent when a SwitchSetting is toggled"""
 
-        def __init__(self, label: str, enabled: bool) -> None:
+        def __init__(self, id: str, label: str, enabled: bool) -> None:
             super().__init__()
+            self.id = id
             self.label = label
             self.enabled = enabled
 
-    def __init__(self, label: str, enabled: bool) -> None:
+    def __init__(self, id:str, label: str, enabled: bool) -> None:
+        self.id = id
         self.enabled = enabled
         self.label = label
         super().__init__()
@@ -60,4 +63,4 @@ class SwitchSetting(Static):
         # update the widget state based on the event value
         self.enabled = event.value
         # bubble a message to the parent
-        self.post_message(self.Changed(label=self.label, enabled=self.enabled))
+        self.post_message(self.Changed(id=self.id, label=self.label, enabled=self.enabled))

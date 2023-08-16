@@ -59,7 +59,7 @@ class TabbedNavigation(TabbedContent):
         """when a SwitchSetting is toggled, log that to the debug pane."""
         debug_pane = self.query_one(DebugPane)
         output = [{
-            "label": event.label,
+            "id": event.id,
             "enabled": event.enabled
         }]
         debug_pane.append_debug_pane(output)
