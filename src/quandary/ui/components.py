@@ -9,35 +9,13 @@ from quandary.app.utils import run_quandary, run_lang_quandary
 from quandary.ui.widgets.SettingsTab import SettingsTab
 from quandary.ui.widgets.SwitchSetting import SwitchSetting
 from quandary.ui.widgets.DebugTab import DebugTab, DebugPanel
-
-class ResponsePane(Static):
-    """A widget to view results."""
-        
-    def compose(self) -> ComposeResult:
-        """child widgets of a ResponsePane"""
-        MARKDOWN = """
-# Default Markdown Doc
-"""
-        yield Markdown(MARKDOWN)
-
-    def clear_markdown(self) -> None:
-        """clears the markdown window"""
-        self.query_one(Markdown).update("")
-
-    def update_markdown(self, content) -> None:
-        """updates the markdown window content"""
-        self.query_one(Markdown).update(content)
-
-class QandAPane(Static):
-    """A panel for submitting questions and reading answers"""
-    def compose(self) -> ComposeResult:
-        yield ScrollableContainer(ResponsePane(), InputPane())
+from quandary.ui.widgets.ResponsePanel import ResponsePanel
 
 class TabbedNavigation(TabbedContent):
     """The navigation pane"""
     def compose(self) -> ComposeResult:
         with TabbedContent("Response", "Debug", "Settings"):
-            yield ResponsePane()
+            yield ResponsePanel()
             yield DebugTab()
             yield SettingsTab()
 
@@ -120,9 +98,9 @@ class ScreenBody(Static):
 
     def on_input_submitted(self, event: Input.Submitted) -> None:
         input_pane = self.query_one(InputPane)
-        response_pane = self.query_one(ResponsePane)
+        response_panel = self.query_one(ResponsePanel)
         debug_panel = self.query_one(DebugPanel)
-        response_pane.clear_markdown()
+        response_panel.clear()
         # update the debug pane with new prompt
         debug_panel.append(event.input)
         # submit prompt
@@ -132,7 +110,7 @@ class ScreenBody(Static):
         # update the debug pane with answer
         debug_panel.append(answer)
         # display answer
-        response_pane.update_markdown(answer.response)
+        response_panel.update(answer.response)
 
     def clear_input(self) -> None:
         """resets the input field"""
