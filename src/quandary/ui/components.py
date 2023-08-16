@@ -5,6 +5,7 @@ from textual.reactive import reactive
 from textual.screen import Screen
 
 from quandary.app.utils import run_quandary, run_lang_quandary
+from quandary.ui.widgets.SettingsTab import SettingsTab
 
 class ResponsePane(Static):
     """A widget to view results."""
@@ -53,7 +54,7 @@ class TabbedNavigation(TabbedContent):
         with TabbedContent("Response", "Debug", "Settings"):
             yield ResponsePane()
             yield DebugPane()
-            yield Placeholder()
+            yield SettingsTab()
 
 class InputPane(Static):
     """A widget to accept and send input"""
