@@ -1,20 +1,22 @@
 from textual.app import ComposeResult
 from textual.widget import Widget
-from textual.widgets import Placeholder
+from textual.containers import Horizontal
+
+from quandary.ui.widgets.SwitchSetting import SwitchSetting
 
 class SettingsTab(Widget):
     """the settings tab of the main navigation window."""
+
     DEFAULT_CSS = """
     SettingsTab {
-        layout: vertical;
-        width: auto;
+        width: 1fr;
         height: auto;
-    }
-    SettingsTab > Label {
-        text-align: center;
-        width: 100%;
+        border: heavy $primary;
     }
     """
 
     def compose(self) -> ComposeResult:
-        yield Placeholder()
+        yield Horizontal(
+            SwitchSetting(enabled=True, description="Document Mode:      "),
+            classes="container"
+        )
