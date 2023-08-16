@@ -11,18 +11,7 @@ from quandary.ui.widgets.SwitchSetting import SwitchSetting
 from quandary.ui.widgets.DebugTab import DebugTab, DebugPanel
 from quandary.ui.widgets.ResponsePanel import ResponsePanel
 from quandary.ui.widgets.NavigationTabs import NavigationTabs
-
-class InputPane(Static):
-    """A widget to accept and send input"""
-    DEFAULT_CSS = """
-    InputPane {
-        height: 1fr;
-        width: 1fr;
-    }
-    """
-    def compose(self) -> ComposeResult:
-        """child widgets of an InputPane"""
-        yield Input(id="text_input_field", placeholder="What do you want to know?")
+from quandary.ui.widgets.InputPanel import InputPanel
 
 class BorderTop(Static):
     """A border for the top of the application."""
@@ -81,7 +70,7 @@ class ScreenBody(Static):
         self.input_text = event.input.value
 
     def on_input_submitted(self, event: Input.Submitted) -> None:
-        input_pane = self.query_one(InputPane)
+        input_pane = self.query_one(InputPanel)
         response_panel = self.query_one(ResponsePanel)
         debug_panel = self.query_one(DebugPanel)
         response_panel.clear()
