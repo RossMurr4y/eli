@@ -9,7 +9,6 @@ from langchain.llms import OpenAI
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage
 
-
 def run_lang_quandary(question):
 
     load_dotenv()
@@ -29,7 +28,7 @@ def run_lang_quandary(question):
 
 
 
-def run_quandary(question):
+def run_llama_index_quandary(question):
 
     # Run
     load_dotenv()

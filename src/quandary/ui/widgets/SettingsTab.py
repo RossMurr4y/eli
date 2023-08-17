@@ -1,6 +1,7 @@
 from textual.app import ComposeResult
 from textual.containers import Horizontal
 from textual.widgets import Static
+from textual.message import Message
 from quandary.ui.widgets.SwitchSetting import SwitchSetting
 
 class SettingsTab(Static):

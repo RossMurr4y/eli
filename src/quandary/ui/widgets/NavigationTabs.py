@@ -7,13 +7,14 @@ from quandary.ui.widgets.ResponseTab import ResponseTab
 from quandary.ui.widgets.DebugTab import DebugTab, DebugPanel
 from quandary.ui.widgets.InputPanel import InputPanel
 from quandary.ui.widgets.SettingsTab import SettingsTab
-from quandary.app.utils import run_quandary, run_lang_quandary
+from quandary.app.utils import run_llama_index_quandary, run_lang_quandary
 
 
 class NavigationTabs(TabbedContent):
     """the navigation tabs on the main screen"""
 
     input_text = reactive("")
+    mode_handler = reactive("run_lang_quandary")
 
     def compose(self) -> ComposeResult:
         with TabbedContent("Response", "Debug", "Settings"):
@@ -46,14 +47,37 @@ class NavigationTabs(TabbedContent):
 
     def submit_question(self, question):
         """submits a question to quandary"""
-        answer = run_lang_quandary(question)
+        indirect_function = globals()[self.mode_handler]
+        answer = indirect_function(question)
         return answer
 
     def on_switch_setting_changed(self, event: SwitchSetting.Changed) -> None:
         """when a SwitchSetting is toggled, log that to the debug pane."""
         debug_panel = self.query_one(DebugPanel)
-        output = [{
+        debug_panel.append([{
             "id": event.id,
             "enabled": event.enabled
-        }]
-        debug_panel.append(output)
+        }])
+        # run the handler for the toggled SwitchSetting
+        self.process_setting_event(event)
+
+    def process_setting_event(self, event: SwitchSetting.Changed) -> None:
+        """routes unique SwitchSetting.Changed events to their handlers"""
+        match event.id:
+            case "setting_doc_mode":
+                self.set_mode_handler(event.enabled)
+            case _:
+                self.set_mode_handler(run_lang_quandary)
+
+    def set_mode_handler(self, enabled) -> None:
+        """sets the runtime mode of the response pane."""
+        debug_panel = self.query_one(DebugPanel)
+        if enabled:
+            self.mode_handler = "run_llama_index_quandary"
+        else:
+            self.mode_handler = "run_lang_quandary"
+        debug_panel.append([
+            "Runtime mode has been changed", 
+            f"mode updated to: {self.mode_handler}"
+        ])
+        
