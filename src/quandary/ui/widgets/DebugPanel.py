@@ -5,10 +5,6 @@ from datetime import datetime
 class DebugPanel(Static):
     """The debug output panel on the debug tab of the main navigation"""
 
-    DEFAULT_CSS = """
-    DebugPanel {}
-    """
-
     id = ""
     output = [{ "DebugInitialised": f"{datetime.now()}" }]
 

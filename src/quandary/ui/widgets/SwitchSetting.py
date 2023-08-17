@@ -7,30 +7,6 @@ from textual.containers import Horizontal
 class SwitchSetting(Static):
     """A binary configuration setting, exposed as a switch with a descriptive label"""
 
-    DEFAULT_CSS = """
-    SwitchSetting {
-        width: auto;
-        height: auto;
-        border: heavy $secondary;
-    }
-
-    SwitchSetting > Switch {
-        height: auto;
-        width: auto;
-    }
-
-    .container {
-        height: auto;
-        width: auto;
-    }
-
-    .label {
-        height: 3;
-        content-align: center middle;
-        width: auto;
-    }
-    """
-
     id = ""
     enabled = reactive(True)
     label = "label_missing"
