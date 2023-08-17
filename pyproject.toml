@@ -10,7 +10,7 @@ dependencies = [
     "llama-index",
     "openai",
     "argparse",
-    "textual",
+    "textual == 0.33.0",
     "langchain"
 ]
 

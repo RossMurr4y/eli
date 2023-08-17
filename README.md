@@ -11,7 +11,7 @@ pip3 install --upgrade build
 
 python3 -m build
 
-# install locally, under the alias 'umm'
+# install locally, under the alias 'quandary'
 pip3 install --editable . 
 ```
 
@@ -36,3 +36,13 @@ Then follow the usage section below.
 ## Usage
 
 Quandary installs as a command-line tool. After installation, you can launch it from any terminal by typing `quandary` followed by the `Enter` key.
+
+## Development
+
+```bash
+# install the textual cli for development mode
+pip3 install --upgrade textual-dev
+
+# run quandary in "live-edit" mode
+textual run --dev src/quandary/__init__.py
+```

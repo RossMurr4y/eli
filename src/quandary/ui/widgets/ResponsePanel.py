@@ -4,10 +4,6 @@ from textual.widgets import Static, Markdown
 class ResponsePanel(Static):
     """the output panel of the response tab of the main navigation window"""
 
-    DEFAULT_CSS = """
-    ResponsePanel {}
-    """
-
     content = ""
 
     def compose(self) -> ComposeResult:
