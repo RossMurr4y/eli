@@ -17,3 +17,13 @@ class ResponsePanel(Static):
         """updates the response panel with new markdown content"""
         self.query_one(Markdown).update(content)
 
+    def append_on_new_line(self, content) -> None:
+        """appends to the existing markdown content after two new lines."""
+        md = self.query_one(Markdown)
+        self.content = self.content + "\n\n" + content
+        self.update(self.content)
+
+    def append_line_rule(self) -> None:
+        """appends a line rule to existing markdown content."""
+        md = self.query_one(Markdown)
+        self.content = self.content + "\n --- \n"

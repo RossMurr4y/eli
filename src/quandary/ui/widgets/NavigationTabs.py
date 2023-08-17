@@ -29,9 +29,12 @@ class NavigationTabs(TabbedContent):
         input_pane = self.query_one(InputPanel)
         response_panel = self.query_one(ResponsePanel)
         debug_panel = self.query_one(DebugPanel)
-        response_panel.clear()
         # update the debug pane with new prompt
         debug_panel.append(event.input)
+        # update the response panel with submitted question
+        # prepend it with some markdown styles to differentiate
+        # q's from a's
+        response_panel.append_on_new_line("#### " + event.input.value)
         # submit prompt
         answer = self.submit_question(event.input.value)
         # clear input
@@ -39,7 +42,7 @@ class NavigationTabs(TabbedContent):
         # update the debug pane with answer
         debug_panel.append(answer)
         # display answer
-        response_panel.update(answer.response)
+        response_panel.append_on_new_line("> " + answer.response)
 
     def clear_input(self) -> None:
         """resets the input field"""
