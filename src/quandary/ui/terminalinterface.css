@@ -20,18 +20,19 @@ BorderBottom {
     dock: bottom;
 }
 
-Input {
-}
-
 DebugPanel {}
 
 DebugTab {}
 
 InputPanel {
-
+    width: auto;
+    height: 3;
+    dock: bottom;
 }
 
 Input {
+    width: 1fr;
+    height: auto;
     border: #797979;
 }
 
@@ -41,11 +42,13 @@ NavigationTabs {
 
 ResponsePanel {
     height: 1fr;
+    width: 1fr;
     border: #797979;
 }
 
 ResponseTab {
-    layout: vertical;
+    height: auto;
+    width: auto;
 }
 
 ScreenBody {
@@ -91,9 +94,15 @@ SwitchSetting > Switch {
 
 .label {
     height: 3;
-    content-align: center middle;
     width: auto;
+    content-align: center middle;
 }
 
 #text_input_field {
+}
+
+#qol_mode_toggle {
+    dock: right;
+    width: auto;
+    height: auto;
 }

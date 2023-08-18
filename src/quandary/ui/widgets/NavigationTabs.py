@@ -68,6 +68,8 @@ class NavigationTabs(TabbedContent):
         match event.id:
             case "setting_doc_mode":
                 self.set_mode_handler(event.enabled)
+            case "qol_mode_toggle":
+                self.set_mode_handler(event.enabled)
             case _:
                 self.set_mode_handler(run_lang_quandary)
 
