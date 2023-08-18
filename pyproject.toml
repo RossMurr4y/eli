@@ -6,12 +6,15 @@ build-backend = "setuptools.build_meta"
 name = "quandary"
 version = "0.0.1"
 dependencies = [
+    "pre-commit",
     "python-dotenv",
     "llama-index",
     "openai",
     "argparse",
     "textual == 0.33.0",
-    "langchain"
+    "langchain",
+    "pytest == 7.4",
+    "black == 23.7"
 ]
 
 [project.scripts]
@@ -19,3 +22,20 @@ quandary = "quandary:start_tui"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.black]
+line-length = 79
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
