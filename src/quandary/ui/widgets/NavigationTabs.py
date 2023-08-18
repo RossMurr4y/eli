@@ -1,4 +1,4 @@
-from textual.widgets import TabbedContent, Input
+from textual.widgets import TabbedContent, Input, Select
 from textual.app import ComposeResult
 from textual.reactive import reactive
 from ..widgets import (
@@ -62,6 +62,15 @@ class NavigationTabs(TabbedContent):
         debug_panel.append([{"id": event.id, "enabled": event.enabled}])
         # run the handler for the toggled SwitchSetting
         self.process_setting_event(event)
+
+    def on_select_changed(self, event: Select.Changed) -> None:
+        """sets the current profile when a new one has been selected"""
+        event.stop()
+        debug_panel = self.query_one(DebugPanel)
+        input_panel = self.query_one(InputPanel)
+        profile = self.query_one(InputPanel).get_current_profile()
+        # output a log message to the debug panel
+        debug_panel.append([f"Switched to profile: {profile.name}"])
 
     def process_setting_event(self, event: SwitchSetting.Changed) -> None:
         """routes unique SwitchSetting.Changed events to their handlers"""
