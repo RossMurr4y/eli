@@ -31,9 +31,10 @@ InputPanel {
 }
 
 Input {
+    content-align: center middle;
     width: 1fr;
-    height: auto;
-    border: #797979;
+    height: 1fr;
+    border: none;
 }
 
 NavigationTabs {
@@ -104,5 +105,10 @@ SwitchSetting > Switch {
 #qol_mode_toggle {
     dock: right;
     width: auto;
+    height: auto;
+}
+
+#select_profile {
+    width: 0.2fr;
     height: auto;
 }
