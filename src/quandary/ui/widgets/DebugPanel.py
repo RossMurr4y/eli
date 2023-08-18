@@ -2,11 +2,12 @@ from textual.app import ComposeResult
 from textual.widgets import Static, Pretty
 from datetime import datetime
 
+
 class DebugPanel(Static):
     """The debug output panel on the debug tab of the main navigation"""
 
     id = ""
-    output = [{ "DebugInitialised": f"{datetime.now()}" }]
+    output = [{"DebugInitialised": f"{datetime.now()}"}]
 
     def compose(self) -> ComposeResult:
         yield Pretty(self.output, id="debug_panel_output")
