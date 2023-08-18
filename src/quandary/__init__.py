@@ -1,4 +1,4 @@
-from .ui.app import Quandary
+from quandary.ui.app import Quandary
 
 
 def start_tui():
