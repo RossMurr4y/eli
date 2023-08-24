@@ -10,14 +10,14 @@ from ..widgets import (
     DebugPanel,
     SwitchSetting,
 )
-from ...app.utils import run_llama_index_quandary, run_lang_quandary
+from ...app.modelangchain import ModeLangChain, ModeLlamaIndex
 
 
 class NavigationTabs(TabbedContent):
     """the navigation tabs on the main screen"""
 
     input_text = reactive("")
-    mode_handler = reactive("run_lang_quandary")
+    mode = reactive(ModeLangChain())
 
     def compose(self) -> ComposeResult:
         with TabbedContent("Response", "Debug", "Settings"):
@@ -32,29 +32,28 @@ class NavigationTabs(TabbedContent):
         response_panel = self.query_one(ResponsePanel)
         debug_panel = self.query_one(DebugPanel)
         # update the debug pane with new prompt
-        debug_panel.append(event.input)
+        debug_panel.append(event.input.value)
         # update the response panel with submitted question
         # prepend it with some markdown styles to differentiate
         # q's from a's
         response_panel.append_on_new_line("#### " + event.input.value)
         # submit prompt
-        answer = self.submit_question(event.input.value)
+        self.submit_question(event.input.value)
         # clear input
         self.clear_input()
         # update the debug pane with answer
-        debug_panel.append(answer)
+        debug_panel.append(str(self.mode.response))
         # display answer
-        response_panel.append_on_new_line("> " + answer.response)
+        response_panel.append_on_new_line("> " + self.mode.response.value)
 
     def clear_input(self) -> None:
         """resets the input field"""
         self.query_one("#text_input_field", Input).value = ""
 
-    def submit_question(self, question):
-        """submits a question to quandary"""
-        indirect_function = globals()[self.mode_handler]
-        answer = indirect_function(question)
-        return answer
+    def submit_question(self, question) -> None:
+        """submits a question to quandary using the currently selected mode"""
+        self.mode.question = question
+        self.mode.response = self.mode.run()
 
     def on_switch_setting_changed(self, event: SwitchSetting.Changed) -> None:
         """when a SwitchSetting is toggled, log that to the debug pane."""
@@ -76,22 +75,22 @@ class NavigationTabs(TabbedContent):
         """routes unique SwitchSetting.Changed events to their handlers"""
         match event.id:
             case "setting_doc_mode":
-                self.set_mode_handler(event.enabled)
+                self.set_mode(event.enabled)
             case "qol_mode_toggle":
-                self.set_mode_handler(event.enabled)
+                self.set_mode(event.enabled)
             case _:
-                self.set_mode_handler(run_lang_quandary)
+                self.set_mode(event.enabled)
 
-    def set_mode_handler(self, enabled) -> None:
+    def set_mode(self, enabled) -> None:
         """sets the runtime mode of the response pane."""
         debug_panel = self.query_one(DebugPanel)
         if enabled:
-            self.mode_handler = "run_llama_index_quandary"
+            self.mode = ModeLlamaIndex()
         else:
-            self.mode_handler = "run_lang_quandary"
+            self.mode = ModeLangChain()
         debug_panel.append(
             [
                 "Runtime mode has been changed",
-                f"mode updated to: {self.mode_handler}",
+                f"mode updated to: {self.mode.__class__.__name__}",
             ]
         )
