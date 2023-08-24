@@ -36,7 +36,7 @@ class NavigationTabs(TabbedContent):
         # update the response panel with submitted question
         # prepend it with some markdown styles to differentiate
         # q's from a's
-        response_panel.append_on_new_line("#### " + event.input.value)
+        response_panel.append_on_new_line("💡\n" + event.input.value + "\n💡")
         # submit prompt
         self.submit_question(event.input.value)
         # clear input
@@ -44,7 +44,8 @@ class NavigationTabs(TabbedContent):
         # update the debug pane with answer
         debug_panel.append(str(self.mode.response))
         # display answer
-        response_panel.append_on_new_line("> " + self.mode.response.value)
+        response_panel.append_on_new_line("> 🗣️ " + self.mode.response.value)
+        response_panel.append_line_rule()
 
     def clear_input(self) -> None:
         """resets the input field"""

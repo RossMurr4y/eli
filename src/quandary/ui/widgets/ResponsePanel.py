@@ -26,3 +26,4 @@ class ResponsePanel(Static):
     def append_line_rule(self) -> None:
         """appends a line rule to existing markdown content."""
         self.content = self.content + "\n --- \n"
+        self.update(self.content)
