@@ -3,35 +3,27 @@ from textual.widgets import Input, Static, Select
 from textual.containers import Horizontal
 from textual.reactive import reactive
 from ..widgets import SwitchSetting
-from ...app.profiles import Profile
+from ...app.profiles import Profile, Profiles, ProfileOption
 
 class InputPanel(Static):
     """The user input text panel for submitting new questions."""
 
-    PROFILES = [
-        Profile(name="Default", debug=False),
-        Profile(name="Debugger", debug=True),
-        Profile(name="Flibberdy", debug=False),
-    ]
+    profiles = Profiles()
+    #profiles.add(Profile("Debugger", []))
+    #profiles.add(Profile("Flibberdy", []))
 
-    current_profile = reactive(("Default", 0))
+    active_profile_selection = reactive(profiles.DEFAULT_PROFILE_SELECTION)
 
     def compose(self) -> ComposeResult:
-        opts = Profile.get_profile_options(self.PROFILES)
+        profile_selection = self.profiles.profile_selection
         with Horizontal():
-            yield Select(opts, prompt="flibs", id="select_profile")
+            yield Select(profile_selection, prompt=self.profiles.DEFAULT_PROFILE_SELECTION[0], id="select_profile")
             yield Input(
                 id="text_input_field", placeholder="What do you want to know?"
             )
             yield SwitchSetting(id="qol_mode_toggle", label="", enabled=True)
 
-    def set_profile(self, profile: Profile) -> None:
-        self.current_profile = profile
-
     def on_select_changed(self, event: Select.Changed) -> None:
-        """update the current profile when a new one is selected"""
-        self.current_profile = event.value
-
-    def get_current_profile(self) -> Profile:
-        """retrieves the current profile object"""
-        return self.PROFILES[self.current_profile]
+        """set the selected profile as active"""
+        if isinstance(event.value, int):
+            self.active_profile_selection = self.profiles.profile_selection[event.value]
