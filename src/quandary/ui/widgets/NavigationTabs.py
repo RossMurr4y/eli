@@ -68,11 +68,11 @@ class NavigationTabs(TabbedContent):
         event.stop()
         debug_panel = self.query_one(DebugPanel)
         input_panel = self.query_one(InputPanel)
-        profile_name = input_panel.active_profile_selection
+        profile = input_panel.profiles.registered_profiles[event.value]
         # only write a debug message if an actual selection
         # was made, as opposed to selecting the prompt
         if isinstance(event.value, int):
-            debug_panel.append([f"{str(event.value)}"])
+            debug_panel.append(f"Profile updated: {str(profile)}")
 
     def process_setting_event(self, event: SwitchSetting.Changed) -> None:
         """routes unique SwitchSetting.Changed events to their handlers"""

@@ -1,1 +1,1 @@
-from .profile import Profile, Profiles, ProfileOption
+from .profile import Profile, Profiles

@@ -6,32 +6,37 @@ from os import environ
 from pathlib import Path
 import yaml
 
-
-class ProfileOption():
-    """A profile option is a configuration setting that can be set within a profile."""
-
-    name: str
-    value: any
-
-    def __init__(self, name: str, value: any):
-        self.name = name
-        self.value = value
+from ..options import ProfileOption, OptionType, InvalidOptionTypeError
 
 class Profile():
 
     name = ""
-    options = [
-            # the default options inherrited by every profile
-            ProfileOption(
-                name='DebugEnabled',
-                value=environ.get("QNDY_DEBUG", "False") in ["True", "1", "true"]
-            )
-        ]
+    options = []
 
     def __init__(self, name: str, options: list = ()):
         self.name = name
-        if len(options) > 0:
-            self.options.append(options)
+        self.options = options
+
+    def __str__(self) -> str:
+        str_options = []
+        for o in self.options:
+            str_options.append(str(o))
+        return f"Profile(name={self.name}, options={str(str_options)})"
+
+    def process_profile_options(self):
+        """loop over a profile options, raising events/messages as necessary"""
+        for option in self.options:
+            try:
+                match option.name:
+                    case OptionType.DEBUG:
+                        # set profiles debug mode
+                        environ['QNDY_DEBUG'] = option.value in ["True", "1", "true"]
+                        pass
+                    case _:
+                        # do nothing
+                        raise InvalidOptionTypeError("A profile contains an invalid option type.")
+            except InvalidOptionTypeError as e:
+                print("InvalidOptionTypeError: ", e)
 
 class Profiles():
 
