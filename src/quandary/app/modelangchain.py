@@ -37,6 +37,7 @@ class ModeLlamaIndex(ModeInterface):
         # Run
         load_dotenv()
 
+    def run(self) -> ResponseLlamaIndex:
         # Constants
         OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
         QNDY_DOCS_PATH = os.environ["QNDY_DOCS_PATH"]
@@ -44,7 +45,6 @@ class ModeLlamaIndex(ModeInterface):
         QNDY_DEBUG = os.environ.get("QNDY_DEBUG", "False") in ["True", "1", "true"]
         openai.api_key = OPENAI_API_KEY
 
-    def run(self) -> ResponseLlamaIndex:
         reader = download_loader("ObsidianReader")
         documents = reader(QNDY_DOCS_PATH).load_data()
 

@@ -44,7 +44,7 @@ class NavigationTabs(TabbedContent):
         # update the debug pane with answer
         debug_panel.append(str(self.mode.response))
         # display answer
-        response_panel.append_on_new_line("> 🗣️ " + self.mode.response.value)
+        response_panel.append_on_new_line("> 🗣️ " + str(self.mode.response.value))
         response_panel.append_line_rule()
 
     def clear_input(self) -> None:
