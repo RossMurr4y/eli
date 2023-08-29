@@ -11,6 +11,7 @@ from ..widgets import (
     SwitchSetting,
 )
 from ...app.modelangchain import ModeLangChain, ModeLlamaIndex
+from ...app.logging import QuandaryLog, QuandaryLogType
 
 
 class NavigationTabs(TabbedContent):
@@ -32,7 +33,8 @@ class NavigationTabs(TabbedContent):
         response_panel = self.query_one(ResponsePanel)
         debug_panel = self.query_one(DebugPanel)
         # update the debug pane with new prompt
-        debug_panel.append(event.input.value)
+        debug_panel.append(str(QuandaryLog(QuandaryLogType.DEBUG, event.input.value)))
+        #debug_panel.append(event.input.value)
         # update the response panel with submitted question
         # prepend it with some markdown styles to differentiate
         # q's from a's
@@ -42,7 +44,8 @@ class NavigationTabs(TabbedContent):
         # clear input
         self.clear_input()
         # update the debug pane with answer
-        debug_panel.append(str(self.mode.response))
+        debug_panel.append(str(QuandaryLog(QuandaryLogType.DEBUG, str(self.mode.response))))
+        #debug_panel.append(str(self.mode.response))
         # display answer
         response_panel.append_on_new_line("> 🗣️ " + str(self.mode.response.value))
         response_panel.append_line_rule()
@@ -59,7 +62,8 @@ class NavigationTabs(TabbedContent):
     def on_switch_setting_changed(self, event: SwitchSetting.Changed) -> None:
         """when a SwitchSetting is toggled, log that to the debug pane."""
         debug_panel = self.query_one(DebugPanel)
-        debug_panel.append([{"id": event.id, "enabled": event.enabled}])
+        debug_panel.append(str(QuandaryLog(QuandaryLogType.DEBUG, [{"id": event.id, "enabled": event.enabled}])))
+        #debug_panel.append([{"id": event.id, "enabled": event.enabled}])
         # run the handler for the toggled SwitchSetting
         self.process_setting_event(event)
 
@@ -72,7 +76,7 @@ class NavigationTabs(TabbedContent):
         # only write a debug message if an actual selection
         # was made, as opposed to selecting the prompt
         if isinstance(event.value, int):
-            debug_panel.append(f"Profile updated: {str(profile)}")
+            debug_panel.append(str(QuandaryLog(QuandaryLogType.DEBUG, f"Profile updated: {str(profile)}")))
 
     def process_setting_event(self, event: SwitchSetting.Changed) -> None:
         """routes unique SwitchSetting.Changed events to their handlers"""
@@ -91,9 +95,7 @@ class NavigationTabs(TabbedContent):
             self.mode = ModeLlamaIndex()
         else:
             self.mode = ModeLangChain()
-        debug_panel.append(
-            [
+        debug_panel.append(str(QuandaryLog(QuandaryLogType.DEBUG, [
                 "Runtime mode has been changed",
                 f"mode updated to: {self.mode.__class__.__name__}",
-            ]
-        )
+            ])))
