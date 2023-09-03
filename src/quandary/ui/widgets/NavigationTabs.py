@@ -56,6 +56,12 @@ class NavigationTabs(TabbedContent):
 
     def submit_question(self, question) -> None:
         """submits a question to quandary using the currently selected mode"""
+        # if cls is enabled, clear screen, then submit question otherwise
+        # just submit question.
+        settings = self.query_one(SettingsTab)
+        response = self.query_one(ResponsePanel)
+        if settings.cls_on_submit:
+            response.clear()
         self.mode.question = question
         self.mode.response = self.mode.run()
 
@@ -85,6 +91,9 @@ class NavigationTabs(TabbedContent):
                 self.set_mode(event.enabled)
             case "qol_mode_toggle":
                 self.set_mode(event.enabled)
+            case "setting_cls_on_submit":
+                settings = self.query_one(SettingsTab)
+                settings.cls_on_submit = event.enabled
             case _:
                 self.set_mode(event.enabled)
 

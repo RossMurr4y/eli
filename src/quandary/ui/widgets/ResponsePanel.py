@@ -1,18 +1,21 @@
 from textual.app import ComposeResult
 from textual.widgets import Static, MarkdownViewer, Markdown
+from textual.reactive import reactive
 
 
 class ResponsePanel(Static):
     """the output panel of the response tab of the main navigation window"""
 
     content = ""
+    cls_on_submit = reactive(False)
 
     def compose(self) -> ComposeResult:
         yield MarkdownViewer(self.content, show_table_of_contents=False)
 
     def clear(self) -> None:
         """clears content from the response panel"""
-        self.query_one(Markdown).update("")
+        self.content = ""
+        self.query_one(Markdown).update(self.content)
 
     def update(self, content) -> None:
         """updates the response panel with new markdown content"""
