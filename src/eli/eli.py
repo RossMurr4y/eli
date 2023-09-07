@@ -8,6 +8,7 @@ from pathlib import Path
 from profile import _Profiles
 from config import Config
 from configurable import Configurable
+from ui import Ui
 
 class Eli(Configurable):
 
@@ -21,9 +22,9 @@ class Eli(Configurable):
             profile_path: Path to a Eli profile. Defaults to ~/.eli.yml
         """
 
-        config = Config.from_file(path=profile_path)
-        self.profiles = _Profiles(config.profiles)
+        self.config = Config.from_file(path=profile_path)
+        self.profiles = _Profiles(self.config.profiles)
+        self.interface = Ui()
 
     def run(self):
-        # todo: actually do sometihng
-        pass
+        self.interface.run()
