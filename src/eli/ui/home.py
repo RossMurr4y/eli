@@ -8,7 +8,7 @@ class Home(Static):
     """the home tab of the primary ui screen"""
     
     def compose(self) -> ComposeResult:
-        with Vertical():
+        with Vertical(id="home_vertical"):
             yield Qanda(
                 id="home_qanda"
             )

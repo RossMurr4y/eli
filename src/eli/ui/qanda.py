@@ -1,7 +1,7 @@
 from textual.app import ComposeResult
 from textual.reactive import reactive
 from textual.widgets import Static, MarkdownViewer, Markdown, Select, Input
-from textual.containers import Horizontal
+from textual.containers import Vertical
 from textual.widgets import Static, RichLog
 from datetime import datetime
 
@@ -19,8 +19,9 @@ class Qanda(Static):
         super().__init__()
 
     def compose(self) -> ComposeResult:
-        yield MarkdownViewer(self.content, show_table_of_contents=False)
-        yield QandaInput()
+        with Vertical(classes="container"):
+            yield MarkdownViewer(self.content, show_table_of_contents=False)
+            yield QandaInput()
 
     def clear(self) -> None:
         """clears the qanda markdown content"""
