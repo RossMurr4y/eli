@@ -2,6 +2,7 @@ from eli import Eli
 
 def run_eli():
     eli = Eli()
+    print(eli)
     eli.run()
 
 if __name__ == "__main__":

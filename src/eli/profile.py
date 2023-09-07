@@ -1,9 +1,9 @@
 """
 
-An Eli profile.
+An Eli profile used to configure Eli behaviour for a specific use-case.
 """
 
-import json
+from configurable import Configurable
 
 class NoProfile(Exception):
     """A profile was not found."""
@@ -14,7 +14,7 @@ class NoProfileSetting(Exception):
 class ProfileAlreadyExists(Exception):
     """A profile already exists with that name."""
 
-class Profile():
+class Profile(Configurable):
     """The base class for a Profile."""
 
     def __init__(
@@ -22,18 +22,18 @@ class Profile():
         name: str,
         debug: bool,
         cls_on_submit: bool,
-        model: any
+        model: any,
     ):
         self.name = name
         self.debug = debug
         self.cls_on_submit = cls_on_submit
         self.model = model
 
-    def __repr__(self):
-        return f"Profile(name: {self.name}, debug: {self.debug}, cls_on_submit: {self.cls_on_submit}, model: {self.model})"
+    def new(name, debug, cls_on_submit, model):
+        return Profile(name=name, debug=debug, cls_on_submit=cls_on_submit, model=model)
 
-class _Profiles:
-    """manage a configuration of profiles."""
+class _Profiles(Configurable):
+    """manage a collection of profiles."""
 
     _DEFAULT_PROFILES = [
         Profile(name="Eli", debug=False, cls_on_submit=True, model=""),
@@ -42,14 +42,14 @@ class _Profiles:
     
     def __init__(self, profiles):
         self.loaded = {}
-        for _default_profile in self._DEFAULT_PROFILES:
-            self.load_profile(_default_profile)
-        for profile in profiles:
-            self.load_profile(profile)
+        self.load(self._DEFAULT_PROFILES)
+        self.load(profiles)
 
-    def load_profile(self, profile: Profile):
+    def load(self, profiles: [Profile]):
         try:
-            return self.loaded.update({profile.name: profile})
+            for profile in profiles:
+                name = profile.name
+                self.loaded.update({name: profile})
         except:
             raise ProfileAlreadyExists(f"A profile called {profile.name} already exists.")
 

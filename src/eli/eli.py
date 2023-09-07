@@ -4,24 +4,26 @@ The base class for the Eli application.
 """
 
 from pathlib import Path
-from profile import _Profiles
 
-class Eli():
+from profile import _Profiles
+from config import Config
+from configurable import Configurable
+
+class Eli(Configurable):
 
     def __init__(
         self,
-        profile_path: str = Path.home().joinpath(Path.home(), ".eli.yml")
+        profile_path: Path = Path.home().joinpath(Path.home(), ".eli.yml")
     ):
         """create an instance of Eli
         
         Args:
             profile_path: Path to a Eli profile. Defaults to ~/.eli.yml
-        
         """
 
-        profiles_from_file = {}
-        self.profiles = _Profiles(profiles_from_file)
+        config = Config.from_file(path=profile_path)
+        self.profiles = _Profiles(config.profiles)
 
     def run(self):
         # todo: actually do sometihng
-        print(self.profiles.get_profile('Eli'))
+        pass
