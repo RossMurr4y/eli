@@ -5,6 +5,7 @@ from .home import Home
 from .debug import Debug
 from .settings import Settings
 
+
 class PrimaryScreen(Static):
     """The primary textualise screen"""
 

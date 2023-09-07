@@ -6,14 +6,15 @@ Logging standardisation within quandary
 from enum import Enum
 from datetime import datetime
 
+
 class QuandaryLogType(Enum):
-    WARN  = '[WARNING]'
-    ERR   = '[ERROR]  '
-    DEBUG = '[DEBUG]  '
+    WARN = "[WARNING]"
+    ERR = "[ERROR]  "
+    DEBUG = "[DEBUG]  "
 
-class QuandaryLog():
+
+class QuandaryLog:
     """A log entry within quandary"""
-
 
     def __init__(self, logtype: QuandaryLogType, value: any):
         current_datetime = datetime.now()

@@ -21,7 +21,7 @@ class SettingsTab(Static):
             SwitchSetting(
                 id="setting_cls_on_submit",
                 enabled=True,
-                label="Refresh on Submit:  "
+                label="Refresh on Submit:  ",
             ),
             classes="container",
         )

@@ -3,6 +3,7 @@ from textual.widgets import Header, Footer
 
 from .screen import PrimaryScreen
 
+
 class Ui(App):
     """User Interface for Eli"""
 
@@ -12,6 +13,6 @@ class Ui(App):
     CSS_PATH = "terminalinterface.css"
 
     def compose(self) -> ComposeResult:
-        yield Header();
-        yield PrimaryScreen();
-        yield Footer(); 
+        yield Header()
+        yield PrimaryScreen()
+        yield Footer()

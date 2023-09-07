@@ -8,8 +8,8 @@ import yaml
 
 from ..options import ProfileOption, OptionType, InvalidOptionTypeError
 
-class Profile():
 
+class Profile:
     name = ""
     options = []
 
@@ -30,16 +30,22 @@ class Profile():
                 match option.name:
                     case OptionType.DEBUG:
                         # set profiles debug mode
-                        environ['QNDY_DEBUG'] = option.value in ["True", "1", "true"]
+                        environ["QNDY_DEBUG"] = option.value in [
+                            "True",
+                            "1",
+                            "true",
+                        ]
                         pass
                     case _:
                         # do nothing
-                        raise InvalidOptionTypeError("A profile contains an invalid option type.")
+                        raise InvalidOptionTypeError(
+                            "A profile contains an invalid option type."
+                        )
             except InvalidOptionTypeError as e:
                 print("InvalidOptionTypeError: ", e)
 
-class Profiles():
 
+class Profiles:
     DEFAULT_PROFILE_NAME = "default"
     DEFAULT_PROFILE_SELECTION = (DEFAULT_PROFILE_NAME, 0)
 
@@ -84,15 +90,19 @@ class Profiles():
         """loads profile configuration from a quandary configuration file"""
         with open(path, "r") as file:
             config = yaml.safe_load(file)
-            profiles = config['profiles']
+            profiles = config["profiles"]
             for profile in profiles:
                 profile_options = []
-                for option in profile['options']:
-                    profile_options.append(ProfileOption(name = option['name'], value = option['value']))
+                for option in profile["options"]:
+                    profile_options.append(
+                        ProfileOption(
+                            name=option["name"], value=option["value"]
+                        )
+                    )
                 self.add(
                     Profile(
-                        name = profile['name'],
-                        options = profile_options,
+                        name=profile["name"],
+                        options=profile_options,
                     )
                 )
         # recalculate the selection list when done

@@ -9,14 +9,18 @@ import yaml
 from configurable import Configurable
 from profile import Profile
 
+
 class ConfigInvalidYaml(Exception):
     """Eli configuration is not valid YAML."""
+
 
 class ConfigMissingMandatory(Exception):
     """Eli configuration is missing mandatory attributes."""
 
+
 class ConfigFileNotFound(Exception):
     """Eli configuration file is inaccesible or does not exist."""
+
 
 class Config(Configurable):
     """The base class for an Eli configuration."""
@@ -24,11 +28,7 @@ class Config(Configurable):
     name = ""
     profiles: [Profile] = []
 
-    def __init__(
-        self,
-        name: str = "Eli",
-        profiles: [Profile] = []
-    ):
+    def __init__(self, name: str = "Eli", profiles: [Profile] = []):
         self.name = name
         self.profiles = []
         for profile in profiles:
@@ -44,6 +44,6 @@ class Config(Configurable):
                 config = Config(name=cfg["name"], profiles=cfg["profiles"])
                 return config
         except:
-            raise ConfigFileNotFound(f"Config file not found at path: {str(path)}")
-
-
+            raise ConfigFileNotFound(
+                f"Config file not found at path: {str(path)}"
+            )

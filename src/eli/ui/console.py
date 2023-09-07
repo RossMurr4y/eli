@@ -5,6 +5,7 @@ from textual.containers import Horizontal
 from textual.widgets import Static, RichLog
 from datetime import datetime
 
+
 class Console(Static):
     """a debug console widget"""
 
@@ -26,4 +27,6 @@ class Console(Static):
 
     def log(self, content: str) -> None:
         """appends new content to the console"""
-        self.query_one(RichLog).write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} {content}")
+        self.query_one(RichLog).write(
+            f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} {content}"
+        )

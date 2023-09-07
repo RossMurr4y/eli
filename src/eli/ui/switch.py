@@ -3,6 +3,7 @@ from textual.reactive import reactive
 from textual.widgets import Static, Switch
 from textual.containers import Horizontal
 
+
 class SwitchSetting(Static):
     """a binary configuration setting exposed as a switch with a descriptive label"""
 

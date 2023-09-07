@@ -10,14 +10,14 @@ from config import Config
 from configurable import Configurable
 from ui import Ui
 
-class Eli(Configurable):
 
+class Eli(Configurable):
     def __init__(
         self,
-        profile_path: Path = Path.home().joinpath(Path.home(), ".eli.yml")
+        profile_path: Path = Path.home().joinpath(Path.home(), ".eli.yml"),
     ):
         """create an instance of Eli
-        
+
         Args:
             profile_path: Path to a Eli profile. Defaults to ~/.eli.yml
         """

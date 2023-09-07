@@ -7,6 +7,7 @@ from datetime import datetime
 
 from .input import QandaInput
 
+
 class Qanda(Static):
     """A Q-and-A widget"""
 

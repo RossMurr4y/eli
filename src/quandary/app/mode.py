@@ -6,27 +6,28 @@ A mode is a base class (interface) for any construct that interacts with an LLM.
 from abc import ABCMeta, abstractmethod
 from .response import ResponseInterface
 
-class ModeInterface(metaclass=ABCMeta):
 
+class ModeInterface(metaclass=ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
         return (
-            hasattr(subclass, 'run') and
-            callable(subclass.run) and
-            hasattr(subclass, 'question') and
-            callable(subclass.question) or
-            NotImplemented)
-    
+            hasattr(subclass, "run")
+            and callable(subclass.run)
+            and hasattr(subclass, "question")
+            and callable(subclass.question)
+            or NotImplemented
+        )
+
     @property
     @abstractmethod
     def question(self):
         raise NotImplementedError
-    
+
     @property
     @abstractmethod
     def response(self):
         raise NotImplementedError
-    
+
     @abstractmethod
     def __init__(self):
         """Initialise the mode configuration and settings"""

@@ -5,15 +5,16 @@ A response is a base class (interface) for any construct that is returned from a
 
 from abc import ABCMeta, abstractmethod
 
-class ResponseInterface(metaclass=ABCMeta):
 
+class ResponseInterface(metaclass=ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass) -> bool:
         return (
-            hasattr(subclass, 'value') and
-            callable(subclass.value) or
-            NotImplemented)
-    
+            hasattr(subclass, "value")
+            and callable(subclass.value)
+            or NotImplemented
+        )
+
     def __str__(self) -> str:
         """allow serialisation to string"""
         return f"{self.__class__.__name__}: {self.value}"

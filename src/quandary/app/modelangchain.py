@@ -21,11 +21,15 @@ from langchain.schema import HumanMessage
 
 class ResponseLangChain(ResponseInterface):
     """A response from the LangChain LLM"""
+
     value = ""
+
 
 class ResponseLlamaIndex(ResponseInterface):
     """A response from Llama via Llama Index"""
+
     value = ""
+
 
 class ModeLlamaIndex(ModeInterface):
     """A mode that uses Llama Index"""
@@ -42,7 +46,11 @@ class ModeLlamaIndex(ModeInterface):
         OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
         QNDY_DOCS_PATH = os.environ["QNDY_DOCS_PATH"]
         QNDY_INDEX_PATH = os.environ["QNDY_INDEX_PATH"]
-        QNDY_DEBUG = os.environ.get("QNDY_DEBUG", "False") in ["True", "1", "true"]
+        QNDY_DEBUG = os.environ.get("QNDY_DEBUG", "False") in [
+            "True",
+            "1",
+            "true",
+        ]
         openai.api_key = OPENAI_API_KEY
 
         reader = download_loader("ObsidianReader")
@@ -88,7 +96,7 @@ class ModeLlamaIndex(ModeInterface):
 
 class ModeLangChain(ModeInterface):
     """A mode that uses LangChain LLM"""
-    
+
     question = ""
     response = ResponseLangChain()
 
@@ -108,4 +116,3 @@ class ModeLangChain(ModeInterface):
         response = ResponseLangChain()
         response.value = prediction.content
         return response
-    
