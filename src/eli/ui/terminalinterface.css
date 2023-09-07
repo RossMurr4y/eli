@@ -1,0 +1,114 @@
+/* Monokai colours in RGB & Hex
+    Background: (46, 46, 46); #2e2e2e
+    Comments: (121, 121, 121); #797979
+    White: (214, 214, 214); #d6d6d6
+    Yellow: (229, 181, 103); #e5b567
+    Green: (180, 210, 115); #b4d273
+    Orange: (232, 125, 62); #e87d3e
+    Purple: (158, 134, 200); #9e86c8
+    Pink: (176, 82, 121); #b05279
+    Blue: (108, 153, 187); #6c99bb
+*/
+
+BorderTop {
+    height: 1;
+    dock: top;
+}
+
+BorderBottom {
+    height: 1;
+    dock: bottom;
+}
+
+DebugPanel {}
+
+DebugTab {}
+
+InputPanel {
+    width: auto;
+    height: 3;
+    dock: bottom;
+}
+
+Input {
+    content-align: center middle;
+    width: 1fr;
+    height: 1fr;
+    border: none;
+}
+
+NavigationTabs {
+    background: #2e2e2e;
+}
+
+ResponsePanel {
+    height: 1fr;
+    width: 1fr;
+    border: #797979;
+}
+
+ResponseTab {
+    height: auto;
+    width: auto;
+}
+
+ScreenBody {
+    width: 1fr;
+    height: 1fr;
+    border: solid white;
+    padding: 1;
+}
+
+#screen_body_tab_nav {
+    dock: top;
+    height: 1fr;
+}
+
+#screen_body_top_v_scroll {
+    dock: top;
+    height: 1fr;
+}
+
+SettingsTab {
+    width: 1fr;
+    height: auto;
+}
+
+#submit {
+    dock: right;
+}
+
+SwitchSetting {
+    width: auto;
+    height: auto;
+}
+
+SwitchSetting > Switch {
+    height: auto;
+    width: auto;
+}
+
+.container {
+    height: auto;
+    width: auto;
+}
+
+.label {
+    height: 3;
+    width: auto;
+    content-align: center middle;
+}
+
+#text_input_field {
+}
+
+#qol_mode_toggle {
+    dock: right;
+    width: auto;
+    height: auto;
+}
+
+#select_profile {
+    width: 0.2fr;
+    height: auto;
+}
