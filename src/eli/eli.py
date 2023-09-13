@@ -22,7 +22,8 @@ class Eli(App):
     debug = reactive(False)
     cls_on_submit = reactive(True)
     model = reactive('')
-    
+    incl_docs = reactive(False)
+
     BINDINGS = [("d", "toggle_dark", "Toggle dark mode")]
     """keybindings for the UI"""
 
@@ -51,5 +52,8 @@ class Eli(App):
         self.debug = profile_settings.debug
         self.cls_on_submit = profile_settings.cls_on_submit
         self.model = profile_settings.model
+        self.incl_docs = profile_settings.incl_docs
         self.query_one("#debug_console").log(f"Profile changed to {profile_settings.name}.")
 
+    def watch_incl_docs(self, incl_docs) -> None:
+        """ensures the `include documents?` slider updates with the profiles"""

@@ -14,15 +14,17 @@ class Profile(Configurable):
         debug: bool,
         cls_on_submit: bool,
         model: any,
+        incl_docs: bool,
     ):
         self.name = name
         self.debug = debug
         self.cls_on_submit = cls_on_submit
         self.model = model
+        self.incl_docs = incl_docs
 
-    def new(name, debug, cls_on_submit, model):
+    def new(name, debug, cls_on_submit, model, incl_docs):
         return Profile(
-            name=name, debug=debug, cls_on_submit=cls_on_submit, model=model
+            name=name, debug=debug, cls_on_submit=cls_on_submit, model=model, incl_docs=incl_docs
         )
 
 

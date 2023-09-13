@@ -14,8 +14,8 @@ class _Profiles(Configurable):
     """manage a collection of profiles."""
 
     _DEFAULT_PROFILES = [
-        Profile(name="Eli", debug=False, cls_on_submit=True, model=""),
-        Profile(name="Debugger", debug=True, cls_on_submit=True, model=""),
+        Profile(name="Eli", debug=False, cls_on_submit=True, model="", incl_docs=False),
+        Profile(name="Debugger", debug=True, cls_on_submit=True, model="", incl_docs=False),
     ]
 
     loaded = {}
