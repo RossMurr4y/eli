@@ -10,72 +10,67 @@
     Blue: (108, 153, 187); #6c99bb
 */
 
-BorderTop {
+Header {
     height: 1;
     dock: top;
 }
 
-BorderBottom {
+Footer {
     height: 1;
     dock: bottom;
 }
 
-DebugPanel {}
-
-DebugTab {}
-
-InputPanel {
-    width: auto;
-    height: 3;
-    dock: bottom;
-}
-
-Input {
-    content-align: center middle;
-    width: 1fr;
-    height: 1fr;
-    border: none;
-}
-
-NavigationTabs {
+PrimaryScreen {
     background: #2e2e2e;
-}
-
-ResponsePanel {
-    height: 1fr;
-    width: 1fr;
-    border: #797979;
-}
-
-ResponseTab {
-    height: auto;
-    width: auto;
-}
-
-ScreenBody {
     width: 1fr;
     height: 1fr;
     border: solid white;
     padding: 1;
 }
 
-#screen_body_tab_nav {
-    dock: top;
-    height: 1fr;
+Home {
+    height: auto;
+    width: auto;
 }
 
-#screen_body_top_v_scroll {
-    dock: top;
+Debug {
+    height: auto;
+    width: auto;
+}
+
+Settings {
+    height: auto;
+    width: auto;
+}
+
+Qanda {
+    width: auto;
+    height: auto;
+}
+
+QandaInput {
+    content-align: center middle;
+    width: auto;
+    height: 3;
+    border: none;
+    dock: bottom;
+}
+
+MarkdownViewer {
     height: 1fr;
+    width: 1fr;
+    dock: top;
+}
+
+TabbedContent {
+    dock: top;
+    height: auto;
+    width: auto;
 }
 
 SettingsTab {
     width: 1fr;
     height: auto;
-}
-
-#submit {
-    dock: right;
 }
 
 SwitchSetting {
@@ -99,16 +94,18 @@ SwitchSetting > Switch {
     content-align: center middle;
 }
 
-#text_input_field {
-}
 
-#qol_mode_toggle {
+#qanda_input_switch_setting {
     dock: right;
-    width: auto;
+}
+
+#qanda_input_input {
+    width: 1fr;
     height: auto;
 }
 
-#select_profile {
-    width: 0.2fr;
+#qanda_input_select {
+    width: 0.15fr;
     height: auto;
+    dock: left;
 }

@@ -46,3 +46,11 @@ pip3 install --upgrade textual-dev
 # run quandary in "live-edit" mode
 textual run --dev src/quandary/__init__.py
 ```
+
+## Utility Command Reference
+
+To format with Black and check code style compiance with flake8, run:
+
+```bash
+pre-commit run --all-files
+```

@@ -8,3 +8,6 @@ storage**
 
 #vs code
 **.DS_Store
+
+# testing
+.pytest_cache**
